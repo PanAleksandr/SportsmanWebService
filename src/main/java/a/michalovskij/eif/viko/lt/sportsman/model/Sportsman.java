@@ -1,30 +1,38 @@
 package a.michalovskij.eif.viko.lt.sportsman.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore; // Импортируйте для использования @JsonIgnore
-import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import org.springframework.hateoas.RepresentationModel;
+import jakarta.persistence.OneToMany;
 import java.util.List;
-import java.util.Objects;
 
 @Entity
-@Table(name = "sportsman") // Указываем имя таблицы
-public class Sportsman {
+public class Sportsman extends RepresentationModel<Sportsman> {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
     private int age;
-    private String profession;
+    private String gender;
     private double height;
     private double weight;
-    private boolean isProfessional;
-    private String gender;
 
-    @JsonIgnore // Игнорируем это поле при сериализации
-    @OneToMany(mappedBy = "sportsman", cascade = CascadeType.ALL)
+    @JsonProperty("isProfessional")
+    private boolean isProfessional;
+
+    private String profession;
+
+    @OneToMany(mappedBy = "sportsman")
+    @JsonIgnore
     private List<Exercise> exercises;
 
-    // Геттеры и сеттеры
+    // get set
     public Long getId() {
         return id;
     }
@@ -49,12 +57,12 @@ public class Sportsman {
         this.age = age;
     }
 
-    public String getProfession() {
-        return profession;
+    public String getGender() {
+        return gender;
     }
 
-    public void setProfession(String profession) {
-        this.profession = profession;
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 
     public double getHeight() {
@@ -77,16 +85,16 @@ public class Sportsman {
         return isProfessional;
     }
 
-    public void setProfessional(boolean isProfessional) {
-        this.isProfessional = isProfessional;
+    public void setProfessional(boolean professional) {
+        isProfessional = professional;
     }
 
-    public String getGender() {
-        return gender;
+    public String getProfession() {
+        return profession;
     }
 
-    public void setGender(String gender) {
-        this.gender = gender;
+    public void setProfession(String profession) {
+        this.profession = profession;
     }
 
     public List<Exercise> getExercises() {
@@ -102,30 +110,10 @@ public class Sportsman {
         return "Sportsman{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", age=" + age +
-                ", gender='" + gender + '\'' +
-                ", height=" + height +
-                ", weight=" + weight +
-                ", isProfessional=" + isProfessional +
+                ", age=" + age +"y.o." +
+                ", height=" + height + "cm" +
+                ", weight=" + weight + "kg" +
                 ", profession='" + profession + '\'' +
                 '}';
     }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Sportsman)) return false;
-        Sportsman sportsman = (Sportsman) o;
-        return id != null && id.equals(sportsman.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
-
-    public void setIsProfessional(boolean isProfessional) {
-        this.isProfessional = isProfessional;
-    }
-
 }

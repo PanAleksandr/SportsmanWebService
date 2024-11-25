@@ -8,10 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import java.util.List;
 
 @SpringBootApplication
+@EnableJpaRepositories("a.michalovskij.eif.viko.lt.sportsman.repository")  // Nurodome paketus su repository
 public class SportsmanWebServiceApplication implements CommandLineRunner {
 
     @Autowired
@@ -21,23 +23,23 @@ public class SportsmanWebServiceApplication implements CommandLineRunner {
     private ExerciseService exerciseService;
 
     public static void main(String[] args) {
-        SpringApplication.run(SportsmanWebServiceApplication.class, args);
+        SpringApplication.run(SportsmanWebServiceApplication.class, args);  // Paleidžiame aplikaciją
     }
 
     @Override
     public void run(String... args) throws Exception {
-        // Получение всех спортсменов и вывод в консоль
+        // Gauname visus sportininkus ir išvedame į konsolę
         List<Sportsman> sportsmen = sportsmanService.getAllSportsmen();
         System.out.println("list of sportsman :");
         for (Sportsman sportsman : sportsmen) {
-            System.out.println(sportsman);
+            System.out.println(sportsman);  // Išvedame sportininką
         }
 
-        // Получение всех упражнений и вывод в консоль
+        // Gauname visus pratimus ir išvedame į konsolę
         List<Exercise> exercises = exerciseService.getAllExercises();
         System.out.println("\nlist of exercise:");
         for (Exercise exercise : exercises) {
-            System.out.println(exercise);
+            System.out.println(exercise);  // Išvedame pratimą
         }
     }
 }

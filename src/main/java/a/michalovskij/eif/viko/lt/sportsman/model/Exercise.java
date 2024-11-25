@@ -1,24 +1,25 @@
 package a.michalovskij.eif.viko.lt.sportsman.model;
 
-
-import jakarta.persistence.*;
-
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Exercise {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String name;
     private int reps;
     private int sets;
 
     @ManyToOne
-    @JoinColumn(name = "sportsman_id")
     private Sportsman sportsman;
 
-    // Геттеры и сеттеры
+    // get  ir set
     public Long getId() {
         return id;
     }
@@ -58,6 +59,8 @@ public class Exercise {
     public void setSportsman(Sportsman sportsman) {
         this.sportsman = sportsman;
     }
+
+    // Переопределение метода toString()
     @Override
     public String toString() {
         return "Exercise{" +
@@ -68,6 +71,4 @@ public class Exercise {
                 ", sportsman=" + (sportsman != null ? sportsman.getName() : "null") +
                 '}';
     }
-
 }
-
